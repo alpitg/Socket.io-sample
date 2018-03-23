@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>
+        Socket.IO
+    </title>
+</head>
+
+<body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var socket = io.connect(window.location.host);
+
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+
+        socket.on('chatEvent', function(data){
+            alert(data.textData);
+            console.log(data.textData);
+        });
+
+        $(document).ready(function () {
+            $('#sendBt').click(function () {
+                socket.emit('chatEvent', $('#field').val());
+            });
+        });
+
+    </script>
+
+    <form>
+        <input type="textbox" id="field">
+    </form>
+    <button id="sendBt">Send</button>
+
+</body>
+
+</html>
